@@ -1,15 +1,18 @@
 # Contribution 1: [Issue Title]
 
 **Contribution Number:** 1
+
 **Student:** Swathi Pulipati 
-**Issue:** [GitHub issue link]  
-**Status:** [Phase I / Phase II / Phase III / Phase IV] [In Progress / Complete]
+
+**Issue:** [[GitHub issue link]](https://github.com/Listenarrs/Listenarr/issues/542#issuecomment-4618173632) 
+
+**Status:** Phase I Complete
 
 ---
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs explaining why this issue interests you, how it matches your skills/learning goals, what you hope to learn]
+I chose this issue because it's part of a project that seems really interesting as a passion project.  It uses a tech stack that I have familiarity with, meaning the repository shouldn't be too difficult to work with.  In addition, the existing project seems to be an Ai-assisted project, so working on it will be a good opportunity to work with AI-written code using AI tools.  The issue itself is a fairly simple bug fix, but will require digging into the weeds of the code, which is a good starting point.  
 
 ---
 
