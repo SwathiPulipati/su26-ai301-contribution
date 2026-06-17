@@ -20,19 +20,19 @@ I chose this issue because it's part of a project that seems really interesting 
 
 ### Problem Description
 
-[In your own words, what's broken or missing?]
+The total size of the audiobook given in the summary is not the sum of all the MP3 files that are part of that audiobook. Also, not every audiobook gives the total size in the summary.
 
 ### Expected Behavior
 
-[What should happen?]
+The total size of all files matched to the book should show accurately in the summary of the audiobook
 
 ### Current Behavior
 
-[What actually happens?]
+Currently, it either doesn't show or shows the wrong value.
 
 ### Affected Components
 
-[Which parts of the codebase are involved?]
+Possibly the frontend, but likely the backend.
 
 ---
 
@@ -40,19 +40,26 @@ I chose this issue because it's part of a project that seems really interesting 
 
 ### Environment Setup
 
-[Notes on setting up your local development environment - challenges you faced, how you solved them]
+My local environment was set up by installing node and .NET on WSL and then running the application.
 
-### Steps to Reproduce
+### Steps to Reproduce (from Claude)
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20
+nvm use 20
 
-### Reproduction Evidence
+curl -fsSL https://dot.net/v1/dotnet-install.sh | bash -s -- --channel 10.0
+echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
+echo 'export PATH=$PATH:$HOME/.dotnet' >> ~/.bashrc
+source ~/.bashrc
 
-- **Commit showing reproduction:** [Link to commit in your fork]
-- **Screenshots/logs:** [If applicable]
-- **My findings:** [What you discovered during reproduction]
+npm install
+npm run install:all
+npm run dev
+```
+
 
 ---
 
@@ -60,30 +67,37 @@ I chose this issue because it's part of a project that seems really interesting 
 
 ### Analysis
 
-[Your analysis of the root cause - what's causing the issue?]
+There are two problems here, the filesize being wrong and the filesize not appearing.
+
+Wrong Value: Audiobook.FileSize (the field shown in the summary) is a legacy single-file field — it is never calculated as the sum of all files.
+In RenameService.cs:379, when files are processed, FileSize is set to only the primary (first alphabetical) file's size.
+
+No Value: Root cause: The frontend only renders the size field when audiobook.fileSize is truthy (AudiobookDetailView.vue:126)
 
 ### Proposed Solution
 
-[High-level description of your fix approach]
+Dig into the code to find out where exactly the value is set and force it to recalculate everytime a file is added. It seems as though changing the calculation in AudiobookDToFactory.cs or LibraryController.cs could fix the problem.
 
 ### Implementation Plan
 
 Using UMPIRE framework (adapted):
 
-**Understand:** [Restate the problem]
+**Understand:** Audiobook size in summary is either missing or incorrect.
 
-**Match:** [What similar patterns/solutions exist in the codebase?]
+**Match:** Most other tags seem to be pulled from metadata rather than dynamic size, so there's nothing else like this.
 
 **Plan:** [Step-by-step implementation plan]
-1. [Modify file X to do Y]
-2. [Add function Z]
-3. [Update tests]
+1. Modify AudiobookDToFactory.cs to calculate filesize dynamically
+2. If this does not work, modify LibraryController.cs to calculate filesize dynamically
+3. If neither work, iterate with Claude Code until solution is found
 
-**Implement:** [Link to your branch/commits as you work]
+**Implement:** Note yet finalized
 
-**Review:** [Self-review checklist - does it follow the project's contribution guidelines?]
+**Review:** 
+1. Check to make sure it does actually work consistently
+2. Make sure to follow code style guidelines.
 
-**Evaluate:** [How will you verify it works?]
+**Evaluate:** I've downloaded a few audiobooks with varying characteristics to test whether this works for different cases.
 
 ---
 
