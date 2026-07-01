@@ -117,9 +117,9 @@ Using UMPIRE framework (adapted):
 
 I believe I have found the cause of the bug and have made a solution for it.  More testing needs to be done to ensure the fix is resilient to the audiobook being uploaded from different sources. Currently failing some push requirements, so no code is on remote yet.
 
-### Week [Y] Progress
+### Week 4 Progress
 
-[Continue documenting as you work]
+It seems as though the main repository has undergone many breaking changes in the days since I have been able to fix, so I must now come up with a different fix for the problem.  The entire codebase has been refactored such that none of my previous code is of any use.  I'm basically starting from scratch.  I'm reading through the codebase to understand the new structure and where changes may need to be made.  In addition, the new changes have brought to my attention that my environment setup may have been flawed so I am also working on fixing that.  Unfortunately, no personal changes have been pushed yet because of those environment problems.
 
 ### Code Changes
 
